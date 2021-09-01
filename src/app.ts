@@ -1,8 +1,8 @@
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 
-import { sequelize } from './services/db.service';
 import { createSchema } from './utils/createSchema';
+import { initDb } from './utils/initDb';
 
 const app = express();
 const port = 4422;
@@ -15,7 +15,7 @@ async function startServer() {
       graphiql: true
     })
   );
-  await sequelize.sync();
+  await initDb();
   app.listen(port, () => {
     console.log(`Server started on port ${port}`);
   });

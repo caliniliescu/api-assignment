@@ -1,4 +1,5 @@
 import { graphql } from "graphql";
+
 import { createSchema } from "../utils/createSchema";
 
 interface Options {

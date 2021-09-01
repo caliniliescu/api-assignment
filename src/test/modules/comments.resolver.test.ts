@@ -1,8 +1,8 @@
-import { sequelize } from "../../services/db.service"
-import { callGraphql } from "../utils"
+import { initDb } from "../../utils/initDb";
+import { callGraphql } from "../utils";
 
 beforeAll(async () => {
-  await sequelize.sync();
+  await initDb();
 });
 
 describe('Comments', () => {
@@ -24,8 +24,8 @@ describe('Comments', () => {
         }
       }
     });
-    console.log(comment);
     expect(comment.data).toBeDefined();
-    expect(comment.data.author).toBe('anonymous');
+    expect(comment.data.createComment).toBeDefined();
+    expect(comment.data.createComment.author).toBe('anonymous');
   });
 });
