@@ -19,3 +19,8 @@ export class UpdateCommentInput extends CommentInput {
   id: number;
 }
 
+@InputType()
+export class DeleteCommentInput {
+  @Field(type => ID)
+  id: number;
+}

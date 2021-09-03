@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --runInBand",
+    "start": "ts-node ./src/app.ts"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "graphql": "^15.5.2",
     "jest": "^27.1.0",
     "node": "^16.6.1",
-    "ts-jest": "^27.0.5"
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1"
   }
 }
