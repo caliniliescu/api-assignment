@@ -1,24 +1,27 @@
 import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
+import { ApolloServer} from 'apollo-server';
 
 import { createSchema } from './utils/createSchema';
 import { initDb } from './utils/initDb';
+import { RandomCannabisApi } from './services/randomCannabisApi';
+import { RandomColorApi } from './services/randomColorApi';
 
 const app = express();
 const port = 4422;
 
 async function startServer() {
-  app.use(
-    '/graphql',
-    graphqlHTTP({
-      schema: await createSchema(),
-      graphiql: true
-    })
-  );
-  await initDb();
-  app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
+  const schema = await createSchema();
+  const server = new ApolloServer({
+    schema,
+    dataSources: () => {
+      return {
+        randomCannabisApi: new RandomCannabisApi(),
+        randomColorApi: new RandomColorApi()
+      };
+    }
   });
+  await server.listen(port);
+  await initDb();
 }
 
 startServer();

@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
+import { Author } from "../authors/authors.type";
 
 @ObjectType()
 export class Comment {
@@ -11,6 +12,9 @@ export class Comment {
   @Field()
   timestamp: number;
 
-  @Field({ nullable: true })
-  author?: string;
+  @Field(type => Author, { nullable: true })
+  author?: Author;
+
+  @Field(type => ID)
+  authorId?: number;
 }
