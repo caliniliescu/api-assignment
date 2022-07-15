@@ -1,7 +1,7 @@
 import { Association, HasManyAddAssociationMixin, HasManyAddAssociationsMixin, HasManyCountAssociationsMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, HasManyHasAssociationMixin, HasManyHasAssociationsMixin, HasManyRemoveAssociationMixin, HasManyRemoveAssociationsMixin, HasManySetAssociationsMixin, Model, NonAttribute } from "sequelize";
-import { Comment } from './comment.model';
+import Comment from './comment.model';
 
-export class Author extends Model {
+export default class Author extends Model {
   declare id: number;
   declare firstname: string;
   declare lastname: string;

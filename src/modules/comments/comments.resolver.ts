@@ -1,11 +1,10 @@
 import { Optional } from "sequelize/types";
 import { Resolver, Query, Mutation, Ctx, Arg } from "type-graphql";
 import { Service } from "typedi";
-import { Author as AuthorModel } from "../../models/author.model";
-import { Comment as CommentModel } from "../../models/comment.model";
 import { DeleteInput } from "../shared/delete.input";
 import { CreateCommentInput, UpdateCommentInput } from "./comments.input";
 import { Comment } from './comments.type';
+import models from "../../models";
 
 @Resolver(of => Comment)
 @Service()
@@ -13,21 +12,21 @@ export class CommentsResolver {
 
   @Query(returns => [Comment])
   async getComments() {
-    return await CommentModel.findAll({ include: AuthorModel });
+    return await models.Comment.findAll({ include: models.Author });
   }
 
   @Query(returns => Comment)
   async getComment(
     @Arg('id') id: number
   ) {
-    return await CommentModel.findByPk(id, { include: AuthorModel });
+    return await models.Comment.findByPk(id, { include: models.Author });
   }
 
   @Mutation(returns => Comment)
   async createComment(
     @Arg('data') data: CreateCommentInput,
     @Ctx() ctx: any) {
-    const newComment = await CommentModel.create(data as unknown as Optional<any, string>, { include: AuthorModel });
+    const newComment = await models.Comment.create(data as unknown as Optional<any, string>, { include: models.Author });
     return newComment;
   }
 
@@ -35,7 +34,7 @@ export class CommentsResolver {
   async updateComment(
     @Arg('data') data: UpdateCommentInput,
     @Ctx() ctx: any) {
-    const commentToUpdate = await CommentModel.findByPk(data.id, { include: AuthorModel });
+    const commentToUpdate = await models.Comment.findByPk(data.id, { include: models.Author });
     delete data.id;
     await commentToUpdate.update(data);
     return commentToUpdate;
@@ -45,7 +44,7 @@ export class CommentsResolver {
   async deleteComment(
     @Arg('data') data: DeleteInput,
     @Ctx() ctx: any) {
-    const commentToDelete = await CommentModel.findByPk(data.id);
+    const commentToDelete = await models.Comment.findByPk(data.id);
     const dest = await commentToDelete.destroy();
     return true;
   }

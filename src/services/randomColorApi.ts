@@ -1,6 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 
-export class RandomColorApi extends RESTDataSource{
+export class RandomColorApi extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = 'https://random-data-api.com/api/color';
